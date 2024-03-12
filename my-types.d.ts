@@ -31,4 +31,5 @@ interface IProduct {
   interface AppState {
     groups: IGroup[]
     id: number
+    sumAllGroups: number
   }
