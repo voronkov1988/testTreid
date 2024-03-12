@@ -6,15 +6,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-// const schema = yup.object().shape({
-//     name: yup
-//         .string()
-//         .min(3, 'Не менее 3 символов')
-//         .max(100, 'не более 100 символов')
-//         .required('Укажите название товара')
-
-// });
-
 const createSchema = (group: IGroup | undefined) => yup.object().shape({
     name: yup
         .string()
@@ -36,7 +27,7 @@ const createSchema = (group: IGroup | undefined) => yup.object().shape({
         .positive('Колличество должно быть положительным')
 });
 
-export const OneProduct = ({ handleSetProduct, groupId, ...props }: OneProductProps) => {
+export const OneProduct = ({  groupId, ...props }: OneProductProps) => {
     const groups = useSelector((state: AppState) => state.groups);
     const group = groups.find(group => group.id === groupId);
     const product = group?.products.find(product => product.id === props.id);
@@ -81,6 +72,9 @@ export const OneProduct = ({ handleSetProduct, groupId, ...props }: OneProductPr
 
     const handleDeleteProduct = () => {
         dispatch(deleteProduct({ groupId, id: props.id }))
+        dispatch(updateProductSum({ groupId, productId: props.id }));
+        dispatch(updateGroupSum({ groupId }));
+        dispatch(updateAllGroupsSum())
     }
 
     return (
