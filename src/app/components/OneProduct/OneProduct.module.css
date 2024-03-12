@@ -1,0 +1,37 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.inputBlock{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.inputBlock input {
+    margin-top: 15px;
+}
+.inputBlock span {
+    position: absolute;
+    margin-left: 20px;
+    font-size: .7rem;
+    color: rgb(125, 123, 123);
+}
+.deleteBtn {
+    padding: 5px;
+    margin-top: 15px;
+    border: 1px solid #fabfbf;
+    width: 100px;
+    background-color: #fabfbf;
+    color: red;
+}
+.deleteBtn:hover {
+    background-color: #f8a9a9;
+}
+.errorMessage {
+    position: absolute;
+    font-size: .7rem;
+    top: 40px;
+    left: 20px;
+    color: red;
+}

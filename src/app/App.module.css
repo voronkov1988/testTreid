@@ -1,0 +1,16 @@
+.main  {
+    display: flex;
+    flex-direction: column;
+    background-color: silver;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  .groupSum {
+    position: fixed;
+    z-index: 100;
+    width: 300px;
+    height: 20px;
+    background-color: blue;
+    color: #fff;
+    text-align: center;
+  }

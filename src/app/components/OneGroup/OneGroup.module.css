@@ -1,0 +1,51 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 20px auto;
+    border: 1px solid silver;
+    width: 96%;
+    background-color: #fff;
+}
+.groupForm {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.groupForm input {
+    padding: 5px 20px;
+    margin: 28px 20px 10px 20px;
+    border-radius: .25rem;
+    outline: none;
+    border: 1px solid silver;
+}
+.groupForm button {
+    width: 200px;
+    text-align: center;
+    margin: 10px 20px;
+    color: red;
+    font-weight: 600;
+    border: 1px solid #fabfbf;
+    background-color: #fabfbf;
+    cursor: pointer;
+    padding: 10px 10px;
+    border-radius: .25rem;
+}
+.groupForm button:hover {
+    background-color: #f8a9a9;
+}
+.groupForm span {
+    position: absolute;
+    font-size: .7rem;
+    margin-left: 20px;
+    margin-top: 10px;
+    color: rgb(147, 144, 144);
+}
+.addProductBtn {
+    border: 1px solid blue;
+    color: blue;
+}
+.addProductBtn:hover {
+    border-color: #02021e;
+    color: #02021e;
+}
