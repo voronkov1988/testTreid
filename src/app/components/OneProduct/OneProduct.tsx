@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styles from './OneProduct.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteProduct, updateAllGroupsSum, updateGroupSum, updateProduct, updateProductSum } from '@/app/store/appSlice'
@@ -28,9 +28,11 @@ const createSchema = (group: IGroup | undefined) => yup.object().shape({
 });
 
 export const OneProduct = ({  groupId, ...props }: OneProductProps) => {
-    const groups = useSelector((state: AppState) => state.groups);
-    const group = groups.find(group => group.id === groupId);
-    const product = group?.products.find(product => product.id === props.id);
+    const { group, product } = useSelector((state: AppState) => {
+        const group = state.groups.find(group => group.id === groupId);
+        const product = group?.products.find(product => product.id === props.id);
+        return { group, product };
+    });
 
     const [count, setCount] = useState<  number | undefined>(product?.count)
 
@@ -46,7 +48,7 @@ export const OneProduct = ({  groupId, ...props }: OneProductProps) => {
 
     const dispatch = useDispatch()
 
-    const handleBlur = (type: string) => {
+    const handleBlur = useCallback((type: string) => {
         const value = parseFloat(price.toString());
         if (!isNaN(value)) {
             const formattedPrice = value.toFixed(2);
@@ -55,7 +57,7 @@ export const OneProduct = ({  groupId, ...props }: OneProductProps) => {
         } else {
             setPrice('0.00');
         }
-    }
+    }, [price]);
 
     useEffect(() => {
         if (typeof product?.price === 'number') {
@@ -63,19 +65,19 @@ export const OneProduct = ({  groupId, ...props }: OneProductProps) => {
         }
     }, [product]);
 
-    const handleUpdateProduct = (field: string, value: string | number) => {
+    const handleUpdateProduct = useCallback((field: string, value: string | number) => {
         dispatch(updateProduct({ groupId, productId: props.id, newValues: { [field]: value } }));
         dispatch(updateProductSum({ groupId, productId: props.id }));
         dispatch(updateGroupSum({ groupId }));
         dispatch(updateAllGroupsSum())
-    }
+    }, [dispatch, groupId, props.id]);
 
-    const handleDeleteProduct = () => {
+    const handleDeleteProduct = useCallback(() => {
         dispatch(deleteProduct({ groupId, id: props.id }))
         dispatch(updateProductSum({ groupId, productId: props.id }));
         dispatch(updateGroupSum({ groupId }));
         dispatch(updateAllGroupsSum())
-    }
+    }, [dispatch, groupId, props.id]);
 
     return (
         <div className={styles.wrapper}>
