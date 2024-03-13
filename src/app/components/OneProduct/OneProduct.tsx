@@ -79,13 +79,21 @@ export const OneProduct = ({  groupId, ...props }: OneProductProps) => {
         dispatch(updateAllGroupsSum())
     }, [dispatch, groupId, props.id]);
 
+    const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => handleUpdateProduct('name', e.target.value), [handleUpdateProduct]);
+    const handlePriceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setPrice(e.target.value), [setPrice]);
+    const handleCountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseInt(e.target.value, 10);  
+        setCount(isNaN(value) ? 0 : value);
+        handleUpdateProduct('count', isNaN(value) ? '' : value);
+    }, [setCount, handleUpdateProduct]);
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.inputBlock}>
                 <span>Название</span>
                 <input value={product?.name}
                     {...register('name', {
-                        onChange: (e) => handleUpdateProduct('name', e.target.value)
+                        onChange: handleNameChange
                     })}
                     type="text" />
 
@@ -101,7 +109,7 @@ export const OneProduct = ({  groupId, ...props }: OneProductProps) => {
                 <input
                     value={price}
                     {...register('price', {
-                        onChange: (e) => setPrice(e.target.value),
+                        onChange: handlePriceChange,
                         onBlur: () => handleBlur('price')
                     })}
                     name='price'
@@ -118,11 +126,7 @@ export const OneProduct = ({  groupId, ...props }: OneProductProps) => {
                 <input
                     value={count}
                     {...register('count', {
-                        onChange: (e) => {
-                            const value = parseInt(e.target.value, 10);  
-                            setCount(isNaN(value) ? 0 : value);
-                            handleUpdateProduct('count', isNaN(value) ? '' : value);
-                        }
+                        onChange: handleCountChange
                     })}
                     type="text" />
                 {errors && (
